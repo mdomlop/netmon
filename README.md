@@ -1,4 +1,4 @@
-![retrosmart-preview](https://raw.githubusercontent.com/mdomlop/netmon/master/preview.png "netmon running")
+![netmon-preview](https://raw.githubusercontent.com/mdomlop/netmon/master/netmon.png "netmon running")
 
 netmon
 =====
