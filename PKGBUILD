@@ -5,11 +5,11 @@ _pkgver_month=06
 _pkgver_day=01
 
 pkgname=netmon
-pkgver=0.9
+pkgver=0.9.1
 pkgrel=1
-pkgdesc="Simple console network traffic monitor."
+pkgdesc='Simple console network traffic monitor for Linux.'
 arch=('i686' 'x86_64')
-url="https://github.com/mdomlop/$pkgname"
+url='https://github.com/mdomlop/netmon'
 source=()
 license=('GPL3')
 
