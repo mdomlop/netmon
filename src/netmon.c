@@ -2,7 +2,16 @@
 #include <unistd.h> /* sleep */
 #include <stdlib.h> /* exit */
 #include <string.h>
-#include <dirent.h>
+#include <dirent.h> /* readdir */
+
+#define PROGRAM     "NetMon"
+#define EXECUTABLE  "netmon"
+#define DESCRIPTION "Simple console network traffic monitor for Linux."
+#define VERSION     "0.9.1"
+#define AUTHOR      "Manuel Domínguez López"
+#define MAIL        "zqbzybc@tznvy.pbz"
+#define URL         "https://github.com/mdomlop/netmon"
+#define LICENSE     "GPLv3+"
 
 #define MEBIBYTE 1024 * 1024
 
