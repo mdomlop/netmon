@@ -33,7 +33,7 @@ void list_interfaces(void)
 int readbytes(char * iface, int rcv)
 {
     char bytes[1024];
-    char path[255]; 
+    char path[255];
     FILE * fptr;
     int fscanf_ok;
 
@@ -48,7 +48,7 @@ int readbytes(char * iface, int rcv)
     if ((fptr = fopen(path, "r")) == NULL) {
         fprintf(stderr, "\nERROR: Network interface not found: %s\n"
                 "\nThe available interfaces are: ", iface);
-        
+
         list_interfaces();
         /* Program exits if file pointer returns NULL. */
         exit(1);
@@ -78,7 +78,7 @@ int main(int argc, char ** argv)
     {
         fprintf(stderr, "\nUsage:\n\n"
                 "  %s INTERFACE"
-                    
+
                 "\n\nWhere INTERFACE is one of the "
                 "interfaces on `/sys/class/net' directory.\n"
                 "\nThe available interfaces are: ", argv[0]);
@@ -99,15 +99,17 @@ int main(int argc, char ** argv)
         rx_f = current_rx - previous_rx;
         tx_f = current_tx - previous_tx;
 
+        printf("[%s] ", interface);
+
         if (rx_f < MEBIBYTE)
-            printf("Received: %.2f KiB/s ", rx_f / 1024);
+            printf("Rx: %6.2f KiB/s ", rx_f / 1024);
         else
-            printf("Received: %.2f MiB/s ", rx_f / 1024 / 1024);
+            printf("Rx: %6.2f MiB/s ", rx_f / 1024 / 1024);
 
         if (tx_f < MEBIBYTE)
-            printf("Transmitted: %.2f KiB/s\n", tx_f / 1024);
+            printf("Tx: %6.2f KiB/s\n", tx_f / 1024);
         else
-            printf("Transmitted: %.2f MiB/s\n", tx_f / 1024 / 1024);
+            printf("Tx: %6.2f MiB/s\n", tx_f / 1024 / 1024);
 
         previous_rx = current_rx;
         previous_tx = current_tx;
