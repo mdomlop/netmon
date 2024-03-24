@@ -26,7 +26,7 @@ PKGBUILD:
 	echo '}' >> $@
 	echo 'package() {' >> $@
 	echo 'cd $$startdir' >> $@
-	echo 'make install DESTDIR=$$pkgdir' >> $@
+	echo 'make install DESTDIR=$$pkgdir' PREFIX=$(PREFIX) >> $@
 	echo '}' >> $@
 
 pkg_arch: $(ARCHPKG)

@@ -3,7 +3,7 @@ DARCHI = $(shell dpkg --print-architecture)
 DEBIANDIR = $(PKGNAME)-$(VERSION)_$(DARCHI)
 DEBIANPKG = $(DEBIANDIR).deb
 
-DEBIANDEPS = libbtrfsutil1
+#DEBIANDEPS = libbtrfsutil1
 
 $(DEBIANDIR)/DEBIAN:
 	mkdir -p -m 0775 $@
@@ -33,15 +33,16 @@ $(DEBIANDIR)/DEBIAN/control: $(DEBIANDIR)/DEBIAN
 	echo 'Homepage: $(URL)' >> $@
 	echo 'Installed-Size: 1' >> $@
 
-$(DEBIANDIR)/DEBIAN/conffiles: $(DEBIANDIR)/DEBIAN
-	echo '/etc/sstab' > $@
+#$(DEBIANDIR)/DEBIAN/conffiles: $(DEBIANDIR)/DEBIAN
+#	echo '/etc/sstab' > $@
 
 pkg_debian: $(DEBIANPKG)
 $(DEBIANPKG): $(DEBIANDIR)
 	cp README.md $(DEBIANDIR)/DEBIAN/README
 	dpkg-deb --build --root-owner-group $(DEBIANDIR)
 
-$(DEBIANDIR): makefile $(DEBIANDIR)/DEBIAN/control $(DEBIANDIR)/DEBIAN/copyright $(DEBIANDIR)/DEBIAN/conffiles
+#$(DEBIANDIR): makefile $(DEBIANDIR)/DEBIAN/control $(DEBIANDIR)/DEBIAN/copyright $(DEBIANDIR)/DEBIAN/conffiles
+$(DEBIANDIR): makefile $(DEBIANDIR)/DEBIAN/control $(DEBIANDIR)/DEBIAN/copyright
 	make install DESTDIR=$(DEBIANDIR)
 	sed -i "s/Installed-Size:.*/Installed-Size:\ $$(du -ks $(DEBIANDIR) | cut -f1)/" $<
 
