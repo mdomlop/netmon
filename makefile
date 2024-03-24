@@ -1,11 +1,12 @@
-NAME = $(shell grep -m1 PROGRAM src/netmon.c | cut -d\" -f2)
-EXECUTABLE = $(shell grep -m1 EXECUTABLE src/netmon.c | cut -d\" -f2)
-DESCRIPTION = $(shell grep -m1 DESCRIPTION src/netmon.c | cut -d\" -f2)
-VERSION = $(shell grep -m1 VERSION src/netmon.c | cut -d\" -f2)
-AUTHOR = $(shell grep -m1 AUTHOR src/netmon.c | cut -d\" -f2)
-MAIL := $(shell grep -m1 MAIL src/netmon.c | cut -d\" -f2 | tr '[A-Za-z]' '[N-ZA-Mn-za-m]')
-URL = $(shell grep -m1 URL src/netmon.c | cut -d\" -f2)
-LICENSE = GPL3
+NAME = $(shell grep -m1 PROGRAM source/netmon.c | cut -d\" -f2)
+EXECUTABLE = $(shell grep -m1 EXECUTABLE source/netmon.c | cut -d\" -f2)
+PKGNAME = $(EXECUTABLE)
+DESCRIPTION = $(shell grep -m1 DESCRIPTION source/netmon.c | cut -d\" -f2)
+VERSION = $(shell grep -m1 VERSION source/netmon.c | cut -d\" -f2)
+AUTHOR = $(shell grep -m1 AUTHOR source/netmon.c | cut -d\" -f2)
+MAIL := $(shell grep -m1 MAIL source/netmon.c | cut -d\" -f2 | tr '[A-Za-z]' '[N-ZA-Mn-za-m]')
+URL = $(shell grep -m1 URL source/netmon.c | cut -d\" -f2)
+LICENSE = $(shell grep -m1 LICENSE source/netmon.c | cut -d\" -f2)
 
 PREFIX = '/usr'
 DESTDIR = ''
@@ -14,14 +15,14 @@ ARCHPKG = $(EXECUTABLE)-$(VERSION)-1-$(shell uname -m).pkg.tar.xz
 
 CFLAGS = -O2 -Wall -ansi -pedantic -static
 
-src/$(EXECUTABLE): src/$(EXECUTABLE).c
+source/$(EXECUTABLE): source/$(EXECUTABLE).c
 
 opti: CFLAGS = -march=native -mtune=native -O2 -Wall -ansi -pedantic -static
-opti: src/$(EXECUTABLE)
+opti: source/$(EXECUTABLE)
 install_opti: opti install
 
-install: src/$(EXECUTABLE) LICENSE README.md
-	install -Dm 755 src/$(EXECUTABLE) $(DESTDIR)$(PREFIX)/bin/$(EXECUTABLE)
+install: source/$(EXECUTABLE) LICENSE README.md
+	install -Dm 755 source/$(EXECUTABLE) $(DESTDIR)$(PREFIX)/bin/$(EXECUTABLE)
 	install -Dm 644 LICENSE $(DESTDIR)$(PREFIX)/share/licenses/$(EXECUTABLE)/COPYING
 	install -Dm 644 README.md $(DESTDIR)$(PREFIX)/share/doc/$(EXECUTABLE)/README
 
@@ -29,24 +30,14 @@ uninstall:
 	rm -f $(PREFIX)/bin/$(EXECUTABLE)
 	rm -f $(PREFIX)/share/licenses/$(EXECUTABLE)/LICENSE
 
-arch_clean:
-	rm -rf pkg
-	rm -f $(ARCHPKG)
 
-clean: arch_clean
-	rm -rf src/$(EXECUTABLE)
+include arch.mk
+include debian.mk
+include ocs.mk
 
-arch_pkg: $(ARCHPKG)
-$(ARCHPKG): PKGBUILD makefile src/$(EXECUTABLE) LICENSE README.md
-	sed -i "s|pkgname=.*|pkgname=$(EXECUTABLE)|" PKGBUILD
-	sed -i "s|pkgver=.*|pkgver=$(VERSION)|" PKGBUILD
-	sed -i "s|pkgdesc=.*|pkgdesc='$(DESCRIPTION)'|" PKGBUILD
-	sed -i "s|url=.*|url='$(URL)'|" PKGBUILD
-	sed -i "s|license=.*|license=('$(LICENSE)')|" PKGBUILD
-	makepkg -df
-	@echo
-	@echo Package done!
-	@echo You can install it as root with:
-	@echo pacman -U $@
+pkg: pkg_arch pkg_debian pkg_ocs
+
+clean: clean_arch clean_debian clean_ocs
+purge: purge_arch purge_debian purge_ocs
 
 .PHONY: clean arch_clean uninstall
