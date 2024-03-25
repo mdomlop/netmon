@@ -14,12 +14,12 @@ PKGBUILD:
 	echo 'pkgdesc="$(DESCRIPTION)"' >> $@
 	#echo 'arch=("any")' >> $@
 	echo 'arch=("i686" "x86_64")' >> $@
-	echo 'makedepends=("btrfs-progs")' >> $@
+	#echo 'makedepends=("btrfs-progs")' >> $@
 	#echo 'changelog=ChangeLog' >> $@
 	echo 'url="$(URL)"' >> $@
 	echo 'source=()' >> $@
 	echo 'license=("$(LICENSE)")' >> $@
-	echo 'backup=(etc/sstab)' >> $@
+	#echo 'backup=(etc/sstab)' >> $@
 	echo 'build() {' >> $@
 	echo 'cd $$startdir' >> $@
 	echo 'make' >> $@
@@ -43,4 +43,4 @@ clean_arch:
 	rm -f PKGBUILD
 
 purge_arch: clean_arch
-	rm -f $(PKGNAME)-*.$(PKGEXT)
+	rm -f $(PKGNAME)-$(VERSION)-1-$(ARCHI).$(PKGEXT)
