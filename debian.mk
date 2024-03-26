@@ -41,8 +41,8 @@ $(DEBIANPKG): $(DEBIANDIR)
 	cp README.md $(DEBIANDIR)/DEBIAN/README
 	dpkg-deb --build --root-owner-group $(DEBIANDIR)
 
-#$(DEBIANDIR): makefile $(DEBIANDIR)/DEBIAN/control $(DEBIANDIR)/DEBIAN/copyright $(DEBIANDIR)/DEBIAN/conffiles
-$(DEBIANDIR): makefile $(DEBIANDIR)/DEBIAN/control $(DEBIANDIR)/DEBIAN/copyright
+#$(DEBIANDIR): $(DEBIANDIR)/DEBIAN/control $(DEBIANDIR)/DEBIAN/copyright $(DEBIANDIR)/DEBIAN/conffiles
+$(DEBIANDIR): $(DEBIANDIR)/DEBIAN/control $(DEBIANDIR)/DEBIAN/copyright
 	make install DESTDIR=$(DEBIANDIR)
 	sed -i "s/Installed-Size:.*/Installed-Size:\ $$(du -ks $(DEBIANDIR) | cut -f1)/" $<
 

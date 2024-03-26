@@ -42,8 +42,8 @@ $(TERMUXPKG): $(TERMUXDIR)
 	cp README.md $(TERMUXDIR)/DEBIAN/README
 	dpkg-deb --build --root-owner-group $(TERMUXDIR)
 
-#$(TERMUXDIR): makefile $(TERMUXDIR)/DEBIAN/control $(TERMUXDIR)/DEBIAN/copyright $(TERMUXDIR)/DEBIAN/conffiles
-$(TERMUXDIR): makefile $(TERMUXDIR)/DEBIAN/control $(TERMUXDIR)/DEBIAN/copyright
+#$(TERMUXDIR): $(TERMUXDIR)/DEBIAN/control $(TERMUXDIR)/DEBIAN/copyright $(TERMUXDIR)/DEBIAN/conffiles
+$(TERMUXDIR): $(TERMUXDIR)/DEBIAN/control $(TERMUXDIR)/DEBIAN/copyright
 	#make install_elf_static DESTDIR=$(TERMUXDIR) PREFIX=$(TERMUXPREFIX) CC=aarch64-linux-gnu-gcc
 	make install DESTDIR=$(TERMUXDIR) PREFIX=$(TERMUXPREFIX)
 	sed -i "s/Installed-Size:.*/Installed-Size:\ $$(du -ks $(TERMUXDIR) | cut -f1)/" $<

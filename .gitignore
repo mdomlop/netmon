@@ -1,5 +1,10 @@
-# Executables
-netmon
+# Me
+netmon*/
+PKGBUILD
+
+# Trash
+*.swp
+pkg/
 
 # Object files
 *.o
@@ -26,9 +31,12 @@ netmon
 *.hex
 
 # Packages
-*.xz
-*.bz2
-*.zip
+*.tar
 *.gz
+*.bz2
+*.xz
+*.zip
 *.deb
-*rpm
+*.rpm
+*.apk
+*.zst

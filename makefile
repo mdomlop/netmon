@@ -21,6 +21,7 @@ CFLAGS_OPTI := $(CFLAGS) -march=native -mtune=native -O3
 CFLAGS_STATIC := $(CFLAGS) -static
 CFLAGS_OPTI_STATIC := $(CFLAGS_OPTI) -static
 CFLAGS_DEBUG := -Wall -ggdb3
+LDLIBS = -lm
 
 EXECC = x86_64-w64-mingw32-gcc
 
@@ -75,26 +76,26 @@ exe_debug: CFLAGS = $(CFLAGS_DEBUG)
 exe_debug: $(EXES_DEBUG)
 
 %.elf: %.c
-	$(CC) $< -o $@ $(CFLAGS)
+	$(CC) $< -o $@ $(CFLAGS) $(LDLIBS)
 %.opti.elf: %.c
-	$(CC) $< -o $@ $(CFLAGS)
+	$(CC) $< -o $@ $(CFLAGS) $(LDLIBS)
 %.static.elf: %.c
-	$(CC) $< -o $@ $(CFLAGS)
+	$(CC) $< -o $@ $(CFLAGS) $(LDLIBS)
 %.opti.static.elf: %.c
-	$(CC) $< -o $@ $(CFLAGS)
+	$(CC) $< -o $@ $(CFLAGS) $(LDLIBS)
 %.debug.elf: %.c
-	$(CC) $< -o $@ $(CFLAGS)
+	$(CC) $< -o $@ $(CFLAGS) $(LDLIBS)
 
 %.exe: %.c
-	$(CC) $< -o $@ $(CFLAGS) -Wno-format-zero-length
+	$(CC) $< -o $@ $(CFLAGS) $(LDLIBS) -Wno-format-zero-length
 %.opti.exe: %.c
-	$(CC) $< -o $@ $(CFLAGS) -Wno-format-zero-length
+	$(CC) $< -o $@ $(CFLAGS) $(LDLIBS) -Wno-format-zero-length
 %.static.exe: %.c
-	$(CC) $< -o $@ $(CFLAGS) -Wno-format-zero-length
+	$(CC) $< -o $@ $(CFLAGS) $(LDLIBS) -Wno-format-zero-length
 %.opti.static.exe: %.c
-	$(CC) $< -o $@ $(CFLAGS) -Wno-format-zero-length
+	$(CC) $< -o $@ $(CFLAGS) $(LDLIBS) -Wno-format-zero-length
 %.debug.exe: %.c
-	$(CC) $< -o $@ $(CFLAGS) -Wno-format-zero-length
+	$(CC) $< -o $@ $(CFLAGS) $(LDLIBS) -Wno-format-zero-length
 
 # Markdown to share/doc/
 $(DESTDIR)/$(PREFIX)/share/doc/$(PKGNAME)/%: %.md
